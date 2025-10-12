@@ -1,0 +1,4 @@
+Types: deb deb-src
+URIs: https://deb.debian.org/debian
+Suites: stable stable-updates
+Components: non-free
