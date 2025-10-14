@@ -1,0 +1,10 @@
+/ftn/log/golded/*.log {
+  rotate 12
+  weekly
+  delaycompress
+  compress
+  nocreate
+  missingok
+  notifempty
+  create 640 ftn ftn
+}

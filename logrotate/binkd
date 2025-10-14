@@ -1,0 +1,13 @@
+/ftn/log/binkd/binkd.log {
+    rotate 12
+    weekly
+    delaycompress
+    compress
+    nocreate
+    missingok
+    notifempty
+    create 640 ftn ftn
+    postrotate
+            /usr/bin/supervisorctl restart binkd:binkd_00
+        endscript
+}

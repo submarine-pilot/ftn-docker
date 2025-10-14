@@ -94,7 +94,8 @@ RUN apt-get update && \
     apt-get install -y \
         libperl5.40 libncurses6 \
         cron supervisor openssh-server \
-        zip unzip rar && \
+        zip unzip rar \
+        locales logrotate && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -106,6 +107,11 @@ COPY supervisord/supervisord.conf /etc/supervisor/
 COPY supervisord/binkd.conf /etc/supervisor/conf.d/
 COPY supervisord/cron.conf /etc/supervisor/conf.d/
 COPY supervisord/sshd.conf /etc/supervisor/conf.d/
+COPY logrotate/* /etc/logrotate.d/
+
+# Generate locales
+COPY debian/locale.gen /etc/
+RUN locale-gen
 
 # User to run services
 RUN useradd -d /ftn -ms /bin/bash ftn
