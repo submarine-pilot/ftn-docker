@@ -1,4 +1,4 @@
-/ftn/log/binkd/binkd.log {
+/ftn/log/binkd/*.log {
     rotate 12
     weekly
     delaycompress

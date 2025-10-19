@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -e
+
+poll
+echo $(date -Isec) "Tossing received messages"
+hpt toss && sync
+echo $(date -Isec) "Tossing received files"
+htick toss && sync
+echo $(date -Isec) "Annoncing received files"
+htick announce && sync
+echo $(date -Isec) "Linking received messages into echo areas"
+hpt link && sync
+echo $(date -Isec) "AreaFix changing requests processing"
+hpt afix && sync
+echo $(date -Isec) "FileFix changing requests processing"
+htick ffix && sync
+echo $(date -Isec) "New fecho files tossing"
+htick toss && sync
+echo $(date -Isec) "Completed successfully"

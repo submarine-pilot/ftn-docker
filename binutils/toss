@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+echo $(date -Isec) "Tossing, scanning for inbound messages and AreaFix changing requests processing"
+hpt toss scan afix
+echo $(date -Isec) "FileFix processing"
+htick toss scan ffix
+echo $(date -Isec) "Packing messages"
+hpt pack
+echo $(date -Isec) "Completed successfully"

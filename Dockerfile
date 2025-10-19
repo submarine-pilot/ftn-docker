@@ -103,11 +103,9 @@ RUN apt-get update && \
 COPY --from=builder /usr/local/ /usr/local/
 COPY --chmod=0700 entrypoint/ftn-entrypoint.sh /usr/local/sbin/
 RUN install -m 0700 -d /etc/ftn-entrypoint.d
-COPY supervisord/supervisord.conf /etc/supervisor/
-COPY supervisord/binkd.conf /etc/supervisor/conf.d/
-COPY supervisord/cron.conf /etc/supervisor/conf.d/
-COPY supervisord/sshd.conf /etc/supervisor/conf.d/
+COPY supervisor/ /etc/supervisor/
 COPY logrotate/* /etc/logrotate.d/
+COPY --chmod=0755 binutils/* /usr/local/bin/
 
 # Generate locales
 COPY debian/locale.gen /etc/
@@ -118,13 +116,16 @@ RUN useradd -d /ftn -ms /bin/bash ftn
 USER ftn
 WORKDIR /ftn
 
-# TODO: make directories and default configuration
-
 # Startup
 USER root
 WORKDIR /
 ENTRYPOINT [ "/usr/local/sbin/ftn-entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
+
+# Cron jobs
+COPY cron/crontab-ftn /
+RUN crontab -u ftn /crontab-ftn && \
+    rm /crontab-ftn
 
 # Exposed resources
 VOLUME /ftn

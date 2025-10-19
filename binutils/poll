@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+echo $(date -Isec) "Exchanging messages and files with links"
+/usr/local/sbin/binkd -p -P 2:201/0 /ftn/etc/binkd/binkd.cfg && sync
+echo $(date -Isec) "Exchanging completed succesfully"
