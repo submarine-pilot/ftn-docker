@@ -87,6 +87,9 @@ RUN cd golded-plus/build && \
 FROM debian:stable
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG OS_TIMEZONE=Europe/Stockholm
+ARG OS_LANG=en_US.UTF-8
+
 # Runtime dependencies
 COPY debian/non-free.sources /etc/apt/sources.list.d/
 RUN apt-get update && \
@@ -107,9 +110,14 @@ COPY supervisor/ /etc/supervisor/
 COPY logrotate/* /etc/logrotate.d/
 COPY --chmod=0755 binutils/* /usr/local/bin/
 
+# Timezone
+RUN echo "$OS_TIMEZONE" > /etc/timezone && \
+    ln -sf "/usr/share/zoneinfo/$OS_TIMEZONE" /etc/localtime
+
 # Generate locales
 COPY debian/locale.gen /etc/
-RUN locale-gen
+RUN locale-gen && \
+    echo "LANG=$OS_LANG" > /etc/locale.conf
 
 # User to run services
 RUN useradd -d /ftn -ms /bin/bash ftn
