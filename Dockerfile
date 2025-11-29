@@ -97,7 +97,7 @@ RUN apt-get update && \
     apt-get install -y \
         libperl5.40 libncurses6 \
         cron supervisor openssh-server \
-        zip unzip rar \
+        zip unzip \
         locales logrotate && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*

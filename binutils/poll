@@ -2,6 +2,8 @@
 
 set -e
 
-echo $(date -Isec) "Exchanging messages and files with links"
-/usr/local/sbin/binkd -p -P 2:201/0 /ftn/etc/binkd/binkd.cfg && sync
+for uplink in $(cat /ftn/etc/binkd/uplink.cfg | grep "^node\s" | cut -d " " -f 2); do
+    echo $(date -Isec) "Exchanging messages and files with" $uplink
+    /usr/local/sbin/binkd -p -P "$uplink" /ftn/etc/binkd/binkd.cfg && sync
+done
 echo $(date -Isec) "Exchanging completed succesfully"

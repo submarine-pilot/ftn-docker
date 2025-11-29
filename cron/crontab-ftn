@@ -3,3 +3,4 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 */10 * * * * send-recv >>/ftn/log/cron/send-recv.log 2>&1
 */5 * * * * toss >>/ftn/log/cron/toss.log 2>&1
+0 1 * * * nlgen >>/ftn/log/cron/nlgen.log 2>&1

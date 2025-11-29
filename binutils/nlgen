@@ -3,9 +3,9 @@
 set -e
 
 echo $(date -Isec) "Extracting latest nodelist from filearea"
-unzip -joLqq /ftn/var/filebox/nodelist/NODELIST.ZIP -d /ftn/var/nodelist/fullsrc
+unzip -joLqq /ftn/var/file/base/nodelist/NODELIST.ZIP -d /ftn/var/nodelist/orig
 echo $(date -Isec) "Updating nodelist with nodediff"
 nlupd
 echo $(date -Isec) "Compiling nodelist for GoldEd"
-gnlnx
+goldnode -c /ftn/.golded/golded.cfg
 echo $(date -Isec) "Completed successfully"

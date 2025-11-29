@@ -3,6 +3,7 @@
 set -e
 
 poll
+
 echo $(date -Isec) "Tossing received messages"
 hpt toss && sync
 echo $(date -Isec) "Tossing received files"
