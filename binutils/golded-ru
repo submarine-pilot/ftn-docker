@@ -1,0 +1,3 @@
+#!/bin/sh
+
+LANG=ru_RU.KOI8-R golded -c/ftn/.golded/golded-ru.cfg
