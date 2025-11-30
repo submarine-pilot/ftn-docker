@@ -110,6 +110,7 @@ RUN install -m 0700 -d /etc/ftn-entrypoint.d
 COPY supervisor/ /etc/supervisor/
 COPY logrotate/* /etc/logrotate.d/
 COPY --chmod=0755 binutils/* /usr/local/bin/
+COPY example-config/ /usr/local/share/doc/example-config/
 
 # Timezone
 RUN echo "$OS_TIMEZONE" > /etc/timezone && \
