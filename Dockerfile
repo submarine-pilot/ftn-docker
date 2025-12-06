@@ -88,7 +88,7 @@ FROM debian:stable
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG OS_TIMEZONE=Europe/Stockholm
-ARG OS_LANG=en_US.UTF-8
+ARG OS_LANG=en_US.ISO-8859-1
 
 # Runtime dependencies
 COPY debian/non-free.sources /etc/apt/sources.list.d/
