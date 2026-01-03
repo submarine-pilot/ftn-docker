@@ -1,0 +1,25 @@
+username: Ivan Ivanov
+address: 2:999/999
+areafile:
+  path: /ftn/etc/husky/husky.cfg
+  type: fidoconfig # fidoconfig, areas.bbs, squish, crashmail
+log: /ftn/log/gossiped/gossiped.log
+template: /ftn/etc/gossiped/gossiped.tpl
+origin: In the middle of nowhere
+# Uncomment to enable blue colorscheme
+#colorscheme: /ftn/etc/gossiped/colors/blue.yml
+tearline: ''
+chrs:
+  default: CP437 2 # <charset> <lvl> http://ftsc.org/docs/fts-5003.001
+  ibmpc: CP437
+areas:
+  - name: fidonet.history
+    chrs: CP866 2
+  - name: utf-8
+    chrs: UTF-8 4
+sorting:
+  areas: unread   # unread, default
+statusbar:
+  clock: true
+citypath: /ftn/etc/gossiped/city.yml
+nodelistpath: /ftn/var/nodelist/lastnode

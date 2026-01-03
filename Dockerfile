@@ -13,7 +13,8 @@ RUN apt-get update && \
         libperl-dev libmodule-build-perl libtest-simple-perl \
         zlib1g zlib1g-dev \
         texinfo \
-        ncurses-dev
+        ncurses-dev \
+        golang-go
 
 # Build user and directories
 RUN useradd -ms /bin/bash user
@@ -59,6 +60,13 @@ RUN cd golded-plus && \
     cmake -DCMAKE_BUILD_TYPE:STRING=Release .. && \
     make
 
+# GossipEd clone
+RUN git clone https://github.com/submarine-pilot/gossiped.git --depth 1 gossiped
+
+# GossipEd build
+RUN cd gossiped && \
+    make
+
 #
 # Installation
 #
@@ -80,15 +88,16 @@ RUN cd rntrack/MakeFiles/linux && \
 RUN cd golded-plus/build && \
     make install
 
+# GossipEd
+RUN cd gossiped && \
+    install -m 0755 gossiped /usr/local/bin/
+
 ##################
 # ASSEMBLY STAGE #
 ##################
 
 FROM debian:stable
 ENV DEBIAN_FRONTEND=noninteractive
-
-ARG OS_TIMEZONE=Europe/Stockholm
-ARG OS_LANG=en_US.ISO-8859-1
 
 # Runtime dependencies
 COPY debian/non-free.sources /etc/apt/sources.list.d/
@@ -106,20 +115,15 @@ RUN apt-get update && \
 # Copy build result and files
 COPY --from=builder /usr/local/ /usr/local/
 COPY --chmod=0700 entrypoint/ftn-entrypoint.sh /usr/local/sbin/
-RUN install -m 0700 -d /etc/ftn-entrypoint.d
+COPY --chmod=0700 entrypoint/ftn-entrypoint.d/ /etc/ftn-entrypoint.d/
 COPY supervisor/ /etc/supervisor/
 COPY logrotate/* /etc/logrotate.d/
 COPY --chmod=0755 binutils/* /usr/local/bin/
 COPY example-config/ /usr/local/share/doc/example-config/
 
-# Timezone
-RUN echo "$OS_TIMEZONE" > /etc/timezone && \
-    ln -sf "/usr/share/zoneinfo/$OS_TIMEZONE" /etc/localtime
-
 # Generate locales
 COPY debian/locale.gen /etc/
-RUN locale-gen && \
-    echo "LANG=$OS_LANG" > /etc/locale.conf
+RUN locale-gen
 
 # User to run services
 RUN useradd -d /ftn -ms /bin/bash ftn

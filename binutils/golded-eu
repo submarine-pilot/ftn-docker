@@ -1,0 +1,3 @@
+#!/bin/sh
+
+LANG=en_US.ISO-8859-1 golded -c/ftn/.golded/golded-eu.cfg "$@"
