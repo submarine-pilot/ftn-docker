@@ -107,7 +107,7 @@ RUN apt-get update && \
         libperl5.40 libncurses6 \
         cron supervisor openssh-server \
         zip unzip rar sharutils \
-        less mc \
+        less mc luit \
         locales logrotate && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
